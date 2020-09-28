@@ -1,6 +1,10 @@
 labs/visualization_and_reporting/temp
 site/*
+cdk.out/
+env/
+.env/
 .local/*
 .DS_Store
 .unotes/*
 .idea
+*.egg-info

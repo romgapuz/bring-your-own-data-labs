@@ -1,0 +1,209 @@
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Jobs {
+  createdAt: AWSDateTime!
+  end_ts: String
+  errors: Int!
+  filename: String!
+  filename_version: String!
+  id: ID!
+  profile_end_ts: String
+  profile_start_ts: String
+  profile_uri: String
+  result_uri: String
+  staged: String!
+  start_ts: String!
+  status: String!
+  updatedAt: AWSDateTime!
+  warnings: Int!
+}
+
+type ModelJobsConnection {
+  items: [Jobs]
+  nextToken: String
+}
+
+type Mutation {
+  createJobs(condition: ModelJobsConditionInput, input: CreateJobsInput!): Jobs
+  deleteJobs(condition: ModelJobsConditionInput, input: DeleteJobsInput!): Jobs
+  updateJobs(condition: ModelJobsConditionInput, input: UpdateJobsInput!): Jobs
+}
+
+type Query {
+  getJobs(id: ID!): Jobs
+  listJobss(filter: ModelJobsFilterInput, limit: Int, nextToken: String): ModelJobsConnection
+}
+
+type Subscription {
+  onCreateJobs: Jobs @aws_subscribe(mutations : ["createJobs"])
+  onDeleteJobs: Jobs @aws_subscribe(mutations : ["deleteJobs"])
+  onUpdateJobs: Jobs @aws_subscribe(mutations : ["updateJobs"])
+}
+
+enum ModelAttributeTypes {
+  _null
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+input CreateJobsInput {
+  end_ts: String
+  errors: Int!
+  filename: String!
+  filename_version: String!
+  id: ID
+  profile_end_ts: String
+  profile_start_ts: String
+  profile_uri: String
+  result_uri: String
+  staged: String!
+  start_ts: String!
+  status: String!
+  warnings: Int!
+}
+
+input DeleteJobsInput {
+  id: ID
+}
+
+input ModelBooleanInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  eq: Boolean
+  ne: Boolean
+}
+
+input ModelFloatInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  between: [Float]
+  eq: Float
+  ge: Float
+  gt: Float
+  le: Float
+  lt: Float
+  ne: Float
+}
+
+input ModelIDInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  beginsWith: ID
+  between: [ID]
+  contains: ID
+  eq: ID
+  ge: ID
+  gt: ID
+  le: ID
+  lt: ID
+  ne: ID
+  notContains: ID
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  between: [Int]
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+}
+
+input ModelJobsConditionInput {
+  and: [ModelJobsConditionInput]
+  end_ts: ModelStringInput
+  errors: ModelIntInput
+  filename: ModelStringInput
+  filename_version: ModelStringInput
+  not: ModelJobsConditionInput
+  or: [ModelJobsConditionInput]
+  profile_end_ts: ModelStringInput
+  profile_start_ts: ModelStringInput
+  profile_uri: ModelStringInput
+  result_uri: ModelStringInput
+  staged: ModelStringInput
+  start_ts: ModelStringInput
+  status: ModelStringInput
+  warnings: ModelIntInput
+}
+
+input ModelJobsFilterInput {
+  and: [ModelJobsFilterInput]
+  end_ts: ModelStringInput
+  errors: ModelIntInput
+  filename: ModelStringInput
+  filename_version: ModelStringInput
+  id: ModelIDInput
+  not: ModelJobsFilterInput
+  or: [ModelJobsFilterInput]
+  profile_end_ts: ModelStringInput
+  profile_start_ts: ModelStringInput
+  profile_uri: ModelStringInput
+  result_uri: ModelStringInput
+  staged: ModelStringInput
+  start_ts: ModelStringInput
+  status: ModelStringInput
+  warnings: ModelIntInput
+}
+
+input ModelSizeInput {
+  between: [Int]
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+}
+
+input ModelStringInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  beginsWith: String
+  between: [String]
+  contains: String
+  eq: String
+  ge: String
+  gt: String
+  le: String
+  lt: String
+  ne: String
+  notContains: String
+  size: ModelSizeInput
+}
+
+input UpdateJobsInput {
+  end_ts: String
+  errors: Int
+  filename: String
+  filename_version: String
+  id: ID!
+  profile_end_ts: String
+  profile_start_ts: String
+  profile_uri: String
+  result_uri: String
+  staged: String
+  start_ts: String
+  status: String
+  warnings: Int
+}
